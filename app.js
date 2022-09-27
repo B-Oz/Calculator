@@ -1,63 +1,73 @@
 const buttons = document.querySelector(".calc-body");
 const ekran = document.querySelector(".calc-screen");
 const operator = document.querySelector("#operator");
-flag = false;
-let sayı1 = 0;
-let sayı2 = 0;
+let sayiEkle = false;
+let esitFlag = false;
+let sayi1 = 0;
+let sayi2 = 0;
 let islem = "";
+let sayi = "";
 
 buttons.addEventListener("click", (e) => {
   if (e.target.classList.contains("btnNo")) {
-    if (ekran.innerText == "0" || flag == true) {
+    if (ekran.innerText == "0" || sayiEkle == true || esitFlag == true) {
       ekran.innerText = e.target.innerText;
     } else {
       ekran.innerText += e.target.innerText;
     }
-    flag = false;
+    sayiEkle = false;
+    esitFlag = false;
+    sayi += e.target.innerText;
   } else if (e.target.classList.contains("btnIslem")) {
+    console.log(sayi1, sayi2, islem);
     operator.innerText = e.target.innerText;
-    console.log(sayı1, sayı2, islem);
-
-    if (flag == false) {
-      sayı1 ? (sayı2 = ekran.innertext) : (sayı1 = ekran.innerText);
-    }
-
-    if (sayı1 && sayı2) {
-      console.log(sayı1, sayı2, islem);
-      ekran.innerText = hesapla(sayı1, sayı2, islem);
-
-      sayı1 = "";
-      sayı2 = "";
+    esitFlag && (sayi1 = ekran.innerText);
+    console.log("sayı1 : ", sayi1);
+    sayi1 ? (sayi2 = sayi) : (sayi1 = sayi);
+    sayi = "";
+    if (sayi1 && sayi2) {
+      console.log(sayi1, sayi2, islem);
+      ekran.innerText = hesapla(sayi1, sayi2, islem);
+      sayi1 = "";
+      sayi2 = "";
       islem = "";
     }
-    islem = e.target.İnnerText;
-    flag = true;
+    islem = e.target.innerText;
+    sayiEkle = true;
   } else if (e.target.classList.contains("opposite")) {
     operator.innerText = e.target.innerText;
-    if (flag == false) {
-      sayı1 ? (sayı2 = ekran.innertext) : (sayı1 = ekran.innerText);
-    }
-    if (sayı1 && sayı2) {
-      ekran.innerText = hesapla(sayı1, sayı2, islem);
-
-      sayı1 = "";
-      sayı2 = "";
+    sayi2 = sayi;
+    if (sayi1 && sayi2) {
+      ekran.innerText = hesapla(sayi1, sayi2, islem);
+      sayi1 = "";
+      sayi2 = "";
       islem = "";
+      console.log(sayi1, sayi2, islem);
     }
+    // sayi1 = "";
+    sayi = "";
+    esitFlag = true;
+  } else if (e.target.classList.contains("btnAc")) {
+    sayi1 = "";
+    sayi2 = "";
+    islem = "";
+    ekran.innerText = "";
+    operator.innerText = "";
   }
 });
 
-const hesapla = (sayı1, sayı2, islem) => {
+function hesapla(sayi1, sayi2, islem) {
+  console.log(sayi1, sayi2, islem);
   switch (islem) {
     case "+":
-      return Number(sayı1) + Number(sayı2);
+      return Number(sayi1) + Number(sayi2);
     case "-":
-      return sayı1 - sayı2;
+      return sayi1 - sayi2;
     case "x":
-      return sayı1 * sayı2;
-    case "+":
-      return sayı1 / sayı2;
+      return sayi1 * sayi2;
+    case "÷":
+      return sayi1 / sayi2;
     case "%":
-      return (sayı1 * sayı2) / 100;
+      return (sayi1 * sayi2) / 100;
   }
-};
+}
